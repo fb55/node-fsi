@@ -1,5 +1,6 @@
 var StreamBuffer = require("streambuffer"),
-    Stream = require("stream");
+    Stream = require("stream"),
+    nodePath = require("path");
 
 var FSI = module.exports = function(options){
 	this.options = options;
@@ -73,6 +74,19 @@ FSI.prototype.createReadStream = function(path, options){
 //FSI uses readDir as it's close to readFile etc.
 FSI.prototype.readdir = function(path, options, cb){
 	this.readDir(path, options, cb);
+};
+
+FSI.prototype.exists = function(path, options, cb){
+	if(typeof options === "function"){
+		cb = options;
+		options = null;
+	}
+
+	//TODO don't use path, as it's functionality differs between plattforms
+	this.readDir(nodePath.dirname(path), options, function(err, files){
+		if(err) cb(err);
+		else cb(null, files.indexOf(nodePath.basename(path)) >= 0);
+	});
 };
 
 module.exports = FSI;
