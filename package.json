@@ -1,0 +1,10 @@
+{
+	"name": "fsi",
+	"description": "an interface for file systems",
+	"author": "Felix Boehm <me@feedic.com>",
+	"version": "0.0.0",
+	"main": "index.js",
+	"dependencies": {
+		"streambuffer": "0"
+	}
+}
